@@ -1,0 +1,19 @@
+.element__group {
+    width: 22px;
+    height: 19px;
+    background-image: url(../../../images/Group.svg);
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    align-self: center;
+    border: none;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+
+.element__group:hover {
+    opacity: 0.5;
+}
+
+
