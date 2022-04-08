@@ -1,9 +1,8 @@
 .profile__info {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
-    height: 73px;
-    padding: 22px 244px 25px 30px;
+    padding: 22px 0 25px 30px;
 }
 
 
