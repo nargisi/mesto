@@ -7,12 +7,11 @@
     <title>mesto</title>
     <link rel="stylesheet" href="./pages/index.css" />
     <link rel="stylesheet" href="./fonts.css" />
-    <script src="/scrypt.js"></script>
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <img class="header__logo" src="./images/Logo.svg" alt="Логотип Место" />
+        <div class="header__logo"></div>
         <div class="header__line"></div>
       </header>
 
@@ -23,14 +22,16 @@
             src="./images/Kusto.jpg"
             alt="Фото Жак-Ив Кусто"
           />
-          <div class="profile__info">
-            <div class="profile__content">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <button class="profile__info-button"></button>
+          <div class="profile__block">
+            <div class="profile__info">
+              <div class="profile__content">
+                <h1 class="profile__title">Жак-Ив Кусто</h1>
+                <button class="profile__info-button"></button>
+              </div>
+              <h2 class="profile__subtitle">Исследователь океана</h2>
             </div>
-            <h2 class="profile__subtitle">Исследователь океана</h2>
+            <button class="profile__button"></button>
           </div>
-          <button class="profile__button"></button>
         </section>
 
         <section class="elements">
@@ -112,5 +113,6 @@
         <h3 class="footer__text">&copy;2022 Mesto Belarus</h3>
       </footer>
     </div>
+    <script src="/scrypt.js"></script>
   </body>
 </html>

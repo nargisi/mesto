@@ -6,4 +6,16 @@
     color: #FFFFFF;
     margin: 0;
     padding-right: 25px;
+    text-align: center;
 }
+
+
+@media screen and (max-width: 768px) {
+    .profile__title {
+        padding-right: 10px;
+        font-size: 27px;
+        line-height: 33px;
+    }
+}
+
+
