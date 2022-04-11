@@ -12,4 +12,4 @@
 
 **GitHub**
 
-[Ссылка проекта на GitHub]()
+[Ссылка проекта на GitHub](https://nargisi.github.io/mesto/)
