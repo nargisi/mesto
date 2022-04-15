@@ -1,144 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>mesto</title>
     <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="stylesheet" href="./fonts.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="page">
-      <header class="header">
-        <div class="header__logo"></div>
-        <div class="header__line"></div>
-      </header>
+        <header class="header">
+            <div class="header__logo"></div>
+        </header>
 
-      <main class="content">
-        <section class="profile">
-          <img
-            class="profile__avatar"
-            src="./images/Kusto.jpg"
-            alt="Фото Жак-Ив Кусто"
-          />
-          <div class="profile__block">
-            <div class="profile__info">
-              <div class="profile__content">
-                <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <button class="profile__info-button"></button>
-              </div>
-              <h2 class="profile__subtitle">Исследователь океана</h2>
-            </div>
-            <button class="profile__button"></button>
-          </div>
-        </section>
+        <main class="content page__content">
+            <section class="profile">
+                <div class="profile__img">
+                    <img class="profile__avatar" src="./images/Kusto.jpg" alt="Фото Жак-Ив Кусто" />
+                </div>
+                <div class="profile__block">
+                    <div class="profile__info">
+                        <div class="profile__content">
+                            <h1 class="profile__title">Жак-Ив Кусто</h1>
+                            <button class="profile__info-button" type="button"
+                                aria-label="Редактировать профиль"></button>
+                        </div>
+                        <p class="profile__subtitle">Исследователь океана</p>
+                    </div>
+                    <button class="profile__button" type="button" aria-label="Добавить фото"></button>
+                </div>
+            </section>
 
-        <section class="grid">
-        <ul class="elements">
-          <li class="element">
-              <div class="element__container">
-            <img
-              class="element__mask-group"
-              src="./images/cat.jpg"
-              alt="Кот"
-            /></div>
-            <div class="element__sign">
-              <h3 class="element__text">Кот</h3>
-              <button class="element__group"></button>
-            </div>
-        </li>
+            <section class="grid">
+                <ul class="elements">
+                    <li class="element">
+                        <!-- <div class="element__container"> -->
+                        <img class="element__mask-group" src="./images/cat.jpg" alt="Кот" />
+                        <!-- </div> -->
+                        <div class="element__sign">
+                            <h2 class="element__text">Кот</h2>
+                            <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                        </div>
+                    </li>
 
-          <li class="element">
-            <div class="element__container">
-            <img
-              class="element__mask-group"
-              src="./images/breakfast.jpg"
-              alt="Вкусный завтрак"
-            /></div>
-            <div class="element__sign">
-              <h3 class="element__text">Очень вкусный завтрак</h3>
-              <button class="element__group"></button>
-            </div>
-        </li>
+                    <li class="element">
+                        <!-- <div class="element__container"> -->
+                        <img class="element__mask-group" src="./images/breakfast.jpg" alt="Вкусный завтрак" />
+                        <!-- </div> -->
+                        <div class="element__sign">
+                            <h2 class="element__text">Очень вкусный завтрак</h2>
+                            <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                        </div>
+                    </li>
 
-          <li class="element">
-            <div class="element__container">
-            <img
-              class="element__mask-group"
-              src="./images/island.jpg"
-              alt="Остров в океане"
-            /></div>
-            <div class="element__sign">
-              <h3 class="element__text">Остроов в океане</h3>
-              <button class="element__group"></button>
-            </div>
-        </li>
+                    <li class="element">
+                        <!-- <div class="element__container"> -->
+                        <img class="element__mask-group" src="./images/island.jpg " alt="Остров в океане" />
+                        <!-- </div> -->
+                        <div class="element__sign">
+                            <h2 class="element__text">Остров в океане</h2>
+                            <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                        </div>
+                    </li>
 
-          <li class="element">
-            <div class="element__container">
-            <img
-              class="element__mask-group"
-              src="./images/steering-wheel.jpg"
-              alt="Штурвал"
-            /></div>
-            <div class="element__sign">
-              <h3 class="element__text">Штурвал</h3>
-              <button class="element__group"></button>
-            </div>
-        </li>
+                    <li class="element">
+                        <!-- <div class="element__container"> -->
+                        <img class="element__mask-group" src="./images/steering-wheel.jpg" alt="Штурвал" />
+                        <!-- </div> -->
+                        <div class="element__sign">
+                            <h2 class="element__text">Штурвал</h2>
+                            <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                        </div>
+                    </li>
 
-          <li class="element">
-            <div class="element__container">
-            <img
-              class="element__mask-group"
-              src="./images/diver.jpg"
-              alt="Дайвер"
-            /></div>
-            <div class="element__sign">
-              <h3 class="element__text">Дайвер</h3>
-              <button class="element__group"></button>
-            </div>
-        </li>
+                    <li class="element">
+                        <!-- <div class="element__container"> -->
+                        <img class="element__mask-group" src="./images/diver.jpg" alt="Дайвер" />
+                        <!-- </div> -->
+                        <div class="element__sign">
+                            <h2 class="element__text">Дайвер</h2>
+                            <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                        </div>
+                    </li>
 
-          <li class="element">
-            <div class="element__container">
-            <img
-              class="element__mask-group"
-              src="./images/night-town.jpg"
-              alt="Ночной город"
-            /></div>
-            <div class="element__sign">
-              <h3 class="element__text">Ночной город</h3>
-              <button class="element__group"></button>
-            </div>
-        </li>
-        </ul>
-    </section>
-      </main>
+                    <li class="element">
+                        <!-- <div class="element__container"> -->
+                        <img class="element__mask-group" src="./images/night-town.jpg" alt="Ночной город" />
+                        <!-- </div> -->
+                        <div class="element__sign">
+                            <h2 class="element__text">Ночной город</h2>
+                            <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </main>
 
-      <footer class="footer">
-        <h3 class="footer__text">&copy;2022 Mesto Belarus</h3>
-      </footer>
+        <footer class="footer page__content">
+            <p class="footer__text">&copy;2022 Mesto Belarus</p>
+        </footer>
     </div>
 
     <div class="popup">
-      <div class="popup__container">
-        <button class="popup__close"></button>
-        <form class="popup__form">
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <div class="popup__field-name">
-            <input id="name" class="popup__inputname" type="text" value="" />
-          </div>
-          <div class="popup__line"></div>
-          <div class="popup__field-job">
-            <input id="text" class="popup__inputjob" type="text" value="" />
-          </div>
-          <div class="popup__line"></div>
-          <button class="popup__submit" type="submit">Сохранить</button>
-        </form>
-      </div>
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <form class="popup__form" name="form">
+                <h3 class="popup__title">Редактировать&nbsp;профиль</h3>
+                <input id="name" class="popup__input popup__input_name" type="text" value="" name="name" />
+                <input id="job" class="popup__input popup__input_job" type="text" value="" name="job" />
+                <button class="popup__submit" type="submit">Сохранить</button>
+            </form>
+        </div>
     </div>
-    <script src="./script.js"></script>
-  </body>
+
+    <script src="./scripts/script.js"></script>
+</body>
+
 </html>

@@ -2,6 +2,7 @@
     width: 22px;
     height: 19px;
     background-image: url(../../../images/Group.svg);
+    background-color: #fff;
     box-sizing: border-box;
     background-repeat: no-repeat;
     background-position: 50%;
@@ -14,6 +15,7 @@
 
 .element__group:hover {
     opacity: 0.5;
+    transition: opacity 0.5s;
 }
 
 

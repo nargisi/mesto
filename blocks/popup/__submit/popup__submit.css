@@ -1,11 +1,11 @@
 .popup__submit {
+    font-family: Inter, Arial, Helvetica, sans-serif;
     background: #000000;
     border-radius: 2px;
     width: 100%;
     margin-top: 48px;
     padding: 0;
     height: 50px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 18px;

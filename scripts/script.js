@@ -3,8 +3,8 @@ const popup = document.querySelector('.popup');
 const closePopupButton = popup.querySelector('.popup__close');
 
 
-const nameInput = popup.querySelector('.popup__inputname')// Воспользуйтесь инструментом .querySelector()
-const jobInput = popup.querySelector('.popup__inputjob')// Воспользуйтесь инструментом .querySelector()
+const nameInput = popup.querySelector('.popup__input_name')// Воспользуйтесь инструментом .querySelector()
+const jobInput = popup.querySelector('.popup__input_job')// Воспользуйтесь инструментом .querySelector()
 
 const nameText = document.querySelector('.profile__title');
 const jobText = document.querySelector('.profile__subtitle');
@@ -34,7 +34,7 @@ function formSubmitHandler (evt) {
     evt.preventDefault();
     nameText.textContent = nameInput.value;
     jobText.textContent = jobInput.value;
-    popup.classList.toggle('popup_opened')
+    popupClose();
 }
 
 // Прикрепляем обработчик к форме:
