@@ -1,8 +1,10 @@
 .element__mask-group {
     width: 100%;
     object-fit: cover;
-    height: 282px;
     margin: 0;
     object-position: center;
-    vertical-align: top;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
 }
