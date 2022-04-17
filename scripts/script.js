@@ -2,8 +2,8 @@ const openPopupButton = document.querySelector('.profile__info-button');
 const popup = document.querySelector('.popup');
 const closePopupButton = popup.querySelector('.popup__close');
 
-const nameInput = popup.querySelector('.popup__type_name'); // Воспользуйтесь инструментом .querySelector()
-const jobInput = popup.querySelector('.popup__type_job'); // Воспользуйтесь инструментом .querySelector()
+const nameInput = popup.querySelector('.popup_type_name'); // Воспользуйтесь инструментом .querySelector()
+const jobInput = popup.querySelector('.popup_type_job'); // Воспользуйтесь инструментом .querySelector()
 
 const nameText = document.querySelector('.profile__title');
 const jobText = document.querySelector('.profile__subtitle');
