@@ -36,6 +36,7 @@
                     <li class="element">
                         <div class="element__container">
                             <img class="element__mask-group" src="./images/cat.jpg" alt="Кот" />
+                            <button class="element__basket" type="button" aria-label="Удалить фото"></button>
                         </div>
                         <div class="element__sign">
                             <h2 class="element__text">Кот</h2>
@@ -113,6 +114,27 @@
         </div>
     </div>
 
+    <div class="popup">
+        <div class="popup__container">
+            <button class="popup__close" type="button"></button>
+            <form class="popup__form" name="form">
+                <h3 class="popup__title">Новое место</h3>
+                <input id="place" class="popup__input popup__input_type_place" type="text" value="" name="place"
+                    placeholder='Название' />
+                <input id="href" class="popup__input popup__input_type_href" type="text" value="" name="href"
+                    placeholder='Ссылка на картинку' />
+                <button class="popup__submit" type="submit">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popimage">
+        <div class="popimage__container">
+            <button class="popup__close" type="button"></button>
+            <img class="popimage__card">
+            <figcaption class="popimage__fig"></figcaption>
+        </div>
+    </div>
     <script src="./scripts/script.js"></script>
 </body>
 
