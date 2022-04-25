@@ -1,5 +1,6 @@
-.popimage__card {
+.popup__image {
     width: 100%;
+    height: 100%;
     max-width: 75vw;
     max-height: 75vh;
     vertical-align: top;

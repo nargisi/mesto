@@ -34,85 +34,146 @@ const initialCards = [
 const elementsList = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('#cards-template').content;
 
+// Переменные для редактирования профиля
 const openPopupButton = document.querySelector('.profile__info-button');
 const popup = document.querySelector('.popup');
 const closePopupButton = popup.querySelector('.popup__close');
 
-const nameInput = popup.querySelector('.popup__input_type_name'); // Воспользуйтесь инструментом .querySelector()
-const jobInput = popup.querySelector('.popup__input_type_job'); // Воспользуйтесь инструментом .querySelector()
+const nameInput = popup.querySelector('.popup__input_type_name');
+const jobInput = popup.querySelector('.popup__input_type_job');
 
 const nameText = document.querySelector('.profile__title');
 const jobText = document.querySelector('.profile__subtitle');
-// Находим форму в DOM
-const formElement = document.querySelector('.popup__form'); // Воспользуйтесь методом querySelector()
 
-// Находим форму добавления фото в DOM
-const formImage = document.querySelector('.popup__form_type_image');
+// Переменные для добавления фото
+const openPopupAddPhotoButton = document.querySelector('.profile__button');
+const popupAddPhoto = document.querySelector('.popup_add');
+const closePopupAddPhotoButton = popupAddPhoto.querySelector(
+  '.popup__close_type_add'
+);
 
 const placeText = document.querySelector('.popup__input_type_place');
 const hrefText = document.querySelector('.popup__input_type_href');
 
-const addButton = document.querySelector('.profile__button');
-const cardContainer = document.querySelector('.element__mask-group');
+//Переменные для просмотра фото
+const viewCardTemplate = document
+  .querySelector('#cards-template')
+  .content.querySelector('.element__mask-group');
+const closeViewCard = document.querySelector('.popup__close_type_image');
+const viewCard = document.querySelector('.popup__image');
+const viewCardName = document.querySelector('.popup__fig');
+const popupViewCard = document.querySelector('.popup_image');
 
-// Находим темплейт и в нем карточку в теге li
-// initialCardsTemplate = document
-//   .querySelector('#cards-template')
-//   .content.querySelector('.element');
+// Находим форму редактирования профиля в DOM
+const formElement = document.querySelector('.popup__form');
 
-// Добавили карточки из массива в разметку
-initialCards.forEach(function (initialCardsInfo) {
-  const cardsElement = elementsTemplate.cloneNode(true);
-  cardsElement.querySelector('.element__text').textContent =
-    initialCardsInfo.name;
-  cardsElement.querySelector('.element__mask-group').src =
-    initialCardsInfo.link;
-  cardsElement.querySelector('.element__mask-group').alt =
-    initialCardsInfo.description;
-  const clickLikeButton = cardsElement.querySelector('.element__group');
-  clickLikeButton.addEventListener('click', () => clickLike(clickLikeButton));
-  const removeCardButton = cardsElement.querySelector('.element__basket');
-  removeCardButton.addEventListener('click', () => removeCard(cardsElement));
-  elementsList.append(cardsElement);
+// Находим форму добавления фото в DOM
+const formAdd = document.querySelector('.popup__form_type_add');
+
+// Handlers
+const handleRemove = (event) => {
+  const card = event.target.closest('.element');
+  card.remove();
+};
+
+const handleClickLike = (event) => {
+  event.target.classList.toggle('element__group_active');
+};
+
+const handleView = (event) => {
+  const src = event.target.src;
+  const name = event.target
+    .closest('.element')
+    .querySelector('.element__text').textContent;
+  openViewingCard(name, src);
+};
+
+// Обработчик добавления фото
+const handleSubmitNewCard = (event) => {
+  event.preventDefault();
+
+  const newCard = generateCard({
+    name: placeText.value,
+    description: placeText.value,
+    link: hrefText.value,
+  });
+  popupAddPhotoClose();
+  placeText.value = '';
+  hrefText.value = '';
+  elementsList.prepend(newCard);
+};
+
+const generateCard = (imageData) => {
+  const cardElement = elementsTemplate.cloneNode(true);
+  cardElement.querySelector('.element__text').textContent = imageData.name;
+  cardElement.querySelector('.element__mask-group').src = imageData.link;
+  cardElement.querySelector('.element__mask-group').alt = imageData.description;
+
+  const clickLikeButton = cardElement.querySelector('.element__group');
+  clickLikeButton.addEventListener('click', handleClickLike);
+  const removeCardButton = cardElement.querySelector('.element__basket');
+  removeCardButton.addEventListener('click', handleRemove);
+
+  const imageElement = cardElement.querySelector('.element__mask-group');
+  imageElement.addEventListener('click', handleView);
+  return cardElement;
+};
+
+initialCards.forEach((initialCardsInfo) => {
+  const newCard = generateCard({
+    name: initialCardsInfo.name,
+    description: initialCardsInfo.description,
+    link: initialCardsInfo.link,
+  });
+  elementsList.append(newCard);
 });
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler(evt) {
-  evt.preventDefault();
+const formSubmitHandler = (event) => {
+  event.preventDefault();
   nameText.textContent = nameInput.value;
   jobText.textContent = jobInput.value;
   popupClose();
-}
+};
 
-// Обработчик добавления фото
-function formSubmitHandlerAddCards(evt) {
-  evt.preventDefault;
-  addPhoto();
-}
-
-function popupOpen() {
+const popupOpen = () => {
   popup.classList.toggle('popup_opened');
   nameInput.value = nameText.textContent;
   jobInput.value = jobText.textContent;
-}
+};
 
-function popupClose() {
+const popupClose = () => {
   popup.classList.toggle('popup_opened');
-}
+};
 
-function clickLike(clickLikeButton) {
-  clickLikeButton.classList.toggle('element__group_active');
-}
+const popupAddPhotoOpen = () => {
+  popupAddPhoto.classList.toggle('popup_opened');
+};
 
-function removeCard(cardsElement) {
-  cardsElement.remove();
-}
+const popupAddPhotoClose = () => {
+  popupAddPhoto.classList.toggle('popup_opened');
+};
+
+const openViewingCard = (name, src) => {
+  popupViewCard.classList.toggle('popup_opened');
+  viewCard.src = src;
+  viewCardName.textContent = name;
+};
+
+const closeViewingCard = () => {
+  popupViewCard.classList.toggle('popup_opened');
+};
+
 openPopupButton.addEventListener('click', popupOpen);
 
 closePopupButton.addEventListener('click', popupClose);
 
-addButton.addEventListener('click', addPhoto);
+openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
+
+closePopupAddPhotoButton.addEventListener('click', popupAddPhotoClose);
+
+closeViewCard.addEventListener('click', closeViewingCard);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -120,4 +181,4 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 //Прикрепляем обработчик к форме добавления фото:
 
-formImage.addEventListener('submit', formSubmitHandlerAddCards);
+formAdd.addEventListener('submit', handleSubmitNewCard);

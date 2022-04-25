@@ -55,7 +55,7 @@
         </li>
     </template>
 
-    <div class="popup">
+    <div class="popup popup_edit">
         <div class="popup__container">
             <button class="popup__close" type="button"></button>
             <form class="popup__form" name="form">
@@ -67,10 +67,10 @@
         </div>
     </div>
 
-    <div class="popup">
-        <div class="popup__container">
-            <button class="popup__close" type="button"></button>
-            <form class="popup__form popup__form_type_image" name="form">
+    <div class="popup popup_add">
+        <div class="popup__container popup__container_type_add">
+            <button class="popup__close popup__close_type_add" type="button"></button>
+            <form class="popup__form popup__form_type_add" name="form">
                 <h3 class="popup__title">Новое место</h3>
                 <input id="place" class="popup__input popup__input_type_place" type="text" value="" name="place"
                     placeholder='Название' />
@@ -81,11 +81,11 @@
         </div>
     </div>
 
-    <div class="popimage">
-        <div class="popimage__container">
-            <button class="popup__close" type="button"></button>
-            <img class="popimage__card">
-            <figcaption class="popimage__fig"></figcaption>
+    <div class="popup popup_image">
+        <div class="popup__container-image">
+            <button class="popup__close popup__close_type_image" type="button"></button>
+            <img class="popup__image" src="">
+            <figcaption class="popup__fig"></figcaption>
         </div>
     </div>
     <script src="./scripts/script.js"></script>
