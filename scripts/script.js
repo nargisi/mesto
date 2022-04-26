@@ -36,11 +36,11 @@ const elementsTemplate = document.querySelector('#cards-template').content;
 
 // Переменные для редактирования профиля
 const openPopupButton = document.querySelector('.profile__info-button');
-const popup = document.querySelector('.popup');
-const closePopupButton = popup.querySelector('.popup__close');
+const popupProfile = document.querySelector('.popup_profile');
+const closePopupButton = popupProfile.querySelector('.popup__close');
 
-const nameInput = popup.querySelector('.popup__input_type_name');
-const jobInput = popup.querySelector('.popup__input_type_job');
+const nameInput = popupProfile.querySelector('.popup__input_type_name');
+const jobInput = popupProfile.querySelector('.popup__input_type_job');
 
 const nameText = document.querySelector('.profile__title');
 const jobText = document.querySelector('.profile__subtitle');
@@ -85,7 +85,10 @@ const handleView = (event) => {
   const name = event.target
     .closest('.element')
     .querySelector('.element__text').textContent;
-  openViewingCard(name, src);
+  viewCard.src = src;
+  viewCardName.textContent = name;
+  viewCard.alt = name;
+  popupOpen(popupViewCard);
 };
 
 // Обработчик добавления фото
@@ -98,23 +101,32 @@ const handleSubmitNewCard = (event) => {
     link: hrefText.value,
   });
   popupAddPhotoClose();
-  placeText.value = '';
-  hrefText.value = '';
+  formAdd.reset();
   elementsList.prepend(newCard);
 };
 
+// Обработчик «отправки» формы, хотя пока
+// она никуда отправляться не будет
+const handleProfileFormSubmit = (event) => {
+  event.preventDefault();
+  nameText.textContent = nameInput.value;
+  jobText.textContent = jobInput.value;
+  popupClose(popupProfile);
+};
+
+//Генерация карточки
 const generateCard = (imageData) => {
   const cardElement = elementsTemplate.cloneNode(true);
+  const imageElement = cardElement.querySelector('.element__mask-group');
   cardElement.querySelector('.element__text').textContent = imageData.name;
-  cardElement.querySelector('.element__mask-group').src = imageData.link;
-  cardElement.querySelector('.element__mask-group').alt = imageData.description;
+  imageElement.src = imageData.link;
+  imageElement.alt = imageData.description;
 
   const clickLikeButton = cardElement.querySelector('.element__group');
   clickLikeButton.addEventListener('click', handleClickLike);
   const removeCardButton = cardElement.querySelector('.element__basket');
   removeCardButton.addEventListener('click', handleRemove);
 
-  const imageElement = cardElement.querySelector('.element__mask-group');
   imageElement.addEventListener('click', handleView);
   return cardElement;
 };
@@ -128,46 +140,39 @@ initialCards.forEach((initialCardsInfo) => {
   elementsList.append(newCard);
 });
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-const formSubmitHandler = (event) => {
-  event.preventDefault();
-  nameText.textContent = nameInput.value;
-  jobText.textContent = jobInput.value;
-  popupClose();
+const popupOpen = (popup) => {
+  popup.classList.add('popup_opened');
 };
 
-const popupOpen = () => {
-  popup.classList.toggle('popup_opened');
+const popupProfileOpen = () => {
   nameInput.value = nameText.textContent;
   jobInput.value = jobText.textContent;
-};
-
-const popupClose = () => {
-  popup.classList.toggle('popup_opened');
+  popupOpen(popupProfile);
 };
 
 const popupAddPhotoOpen = () => {
-  popupAddPhoto.classList.toggle('popup_opened');
+  popupOpen(popupAddPhoto);
+};
+
+const popupClose = (popup) => {
+  popup.classList.remove('popup_opened');
+};
+
+const popupProfileClose = () => {
+  popupClose(popupProfile);
 };
 
 const popupAddPhotoClose = () => {
-  popupAddPhoto.classList.toggle('popup_opened');
-};
-
-const openViewingCard = (name, src) => {
-  popupViewCard.classList.toggle('popup_opened');
-  viewCard.src = src;
-  viewCardName.textContent = name;
+  popupClose(popupAddPhoto);
 };
 
 const closeViewingCard = () => {
-  popupViewCard.classList.toggle('popup_opened');
+  popupClose(popupViewCard);
 };
 
-openPopupButton.addEventListener('click', popupOpen);
+openPopupButton.addEventListener('click', popupProfileOpen);
 
-closePopupButton.addEventListener('click', popupClose);
+closePopupButton.addEventListener('click', popupProfileClose);
 
 openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
 
@@ -177,7 +182,7 @@ closeViewCard.addEventListener('click', closeViewingCard);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', handleProfileFormSubmit);
 
 //Прикрепляем обработчик к форме добавления фото:
 
