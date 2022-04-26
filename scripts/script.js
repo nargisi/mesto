@@ -64,13 +64,16 @@ const viewCard = document.querySelector('.popup__image');
 const viewCardName = document.querySelector('.popup__fig');
 const popupViewCard = document.querySelector('.popup_image');
 
+//Переменная для поиска всех крестиков закрытия
+const popups = document.querySelectorAll('.popup');
+
 // Находим форму редактирования профиля в DOM
 const formElement = document.querySelector('.popup__form');
 
 // Находим форму добавления фото в DOM
 const formAdd = document.querySelector('.popup__form_type_add');
 
-// Handlers
+// Обработчики
 const handleRemove = (event) => {
   const card = event.target.closest('.element');
   card.remove();
@@ -140,6 +143,7 @@ initialCards.forEach((initialCardsInfo) => {
   elementsList.append(newCard);
 });
 
+// Функции открытия и закрытия попапов
 const popupOpen = (popup) => {
   popup.classList.add('popup_opened');
 };
@@ -170,15 +174,18 @@ const closeViewingCard = () => {
   popupClose(popupViewCard);
 };
 
+//Слушатель для всех крестиков закрытия
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup__close')) {
+      popupClose(popup);
+    }
+  });
+});
+
 openPopupButton.addEventListener('click', popupProfileOpen);
 
-closePopupButton.addEventListener('click', popupProfileClose);
-
 openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
-
-closePopupAddPhotoButton.addEventListener('click', popupAddPhotoClose);
-
-closeViewCard.addEventListener('click', closeViewingCard);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
