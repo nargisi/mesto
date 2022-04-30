@@ -75,8 +75,7 @@ const formAdd = document.querySelector('.popup__form_type_add');
 
 // Обработчики
 const handleRemove = (event) => {
-  const card = event.target.closest('.element');
-  card.remove();
+  event.target.closest('.element').remove();
 };
 
 const handleClickLike = (event) => {
@@ -117,6 +116,24 @@ const handleProfileFormSubmit = (event) => {
   popupClose(popupProfile);
 };
 
+function handlePopupProfileOverlayClick(event) {
+  if (event.target === event.currentTarget) {
+    popupProfileClose();
+  }
+}
+
+function handlePopupAddPhotoOverlayClick(event) {
+  if (event.target === event.currentTarget) {
+    popupAddPhotoClose();
+  }
+}
+
+function handlePopupViewCardOverlayClick(event) {
+  if (event.target === event.currentTarget) {
+    closeViewingCard();
+  }
+}
+
 //Генерация карточки
 const generateCard = (imageData) => {
   const cardElement = elementsTemplate.cloneNode(true);
@@ -146,6 +163,9 @@ initialCards.forEach((initialCardsInfo) => {
 // Функции открытия и закрытия попапов
 const popupOpen = (popup) => {
   popup.classList.add('popup_opened');
+  // popup.addEventListener('keydown', (evt) => {
+  //   console.log(evt);
+  // });
 };
 
 const popupProfileOpen = () => {
@@ -160,6 +180,7 @@ const popupAddPhotoOpen = () => {
 
 const popupClose = (popup) => {
   popup.classList.remove('popup_opened');
+  // popup.removeEventListener('keydown', () => {});
 };
 
 const popupProfileClose = () => {
@@ -186,6 +207,12 @@ popups.forEach((popup) => {
 openPopupButton.addEventListener('click', popupProfileOpen);
 
 openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
+
+popupProfile.addEventListener('click', handlePopupProfileOverlayClick);
+
+popupAddPhoto.addEventListener('click', handlePopupAddPhotoOverlayClick);
+
+popupViewCard.addEventListener('click', handlePopupViewCardOverlayClick);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
