@@ -68,7 +68,7 @@ const popupViewCard = document.querySelector('.popup_image');
 const popups = document.querySelectorAll('.popup');
 
 // Находим форму редактирования профиля в DOM
-const formElement = document.querySelector('.popup__form');
+const formProfile = document.querySelector('.popup__form_type_profile');
 
 // Находим форму добавления фото в DOM
 const formAdd = document.querySelector('.popup__form_type_add');
@@ -102,6 +102,7 @@ const handleSubmitNewCard = (event) => {
     description: placeText.value,
     link: hrefText.value,
   });
+
   popupAddPhotoClose();
   formAdd.reset();
   elementsList.prepend(newCard);
@@ -116,38 +117,41 @@ const handleProfileFormSubmit = (event) => {
   popupClose(popupProfile);
 };
 
-function handlePopupProfileOverlayClick(event) {
-  if (event.target === event.currentTarget) {
-    popupProfileClose();
-  }
-}
+// function handlePopupProfileOverlayClick(event) {
+//   if (event.target === event.currentTarget) {
+//     popupProfileClose();
+//   }
+// }
 
-function handlePopupAddPhotoOverlayClick(event) {
-  if (event.target === event.currentTarget) {
-    popupAddPhotoClose();
-  }
-}
+// function handlePopupAddPhotoOverlayClick(event) {
+//   if (event.target === event.currentTarget) {
+//     popupAddPhotoClose();
+//   }
+// }
 
-function handlePopupViewCardOverlayClick(event) {
-  if (event.target === event.currentTarget) {
-    closeViewingCard();
-  }
-}
+// function handlePopupViewCardOverlayClick(event) {
+//   if (event.target === event.currentTarget) {
+//     closeViewingCard();
+//   }
+// }
 
 //Генерация карточки
 const generateCard = (imageData) => {
   const cardElement = elementsTemplate.cloneNode(true);
   const imageElement = cardElement.querySelector('.element__mask-group');
+
   cardElement.querySelector('.element__text').textContent = imageData.name;
   imageElement.src = imageData.link;
   imageElement.alt = imageData.description;
 
   const clickLikeButton = cardElement.querySelector('.element__group');
   clickLikeButton.addEventListener('click', handleClickLike);
+
   const removeCardButton = cardElement.querySelector('.element__basket');
   removeCardButton.addEventListener('click', handleRemove);
 
   imageElement.addEventListener('click', handleView);
+
   return cardElement;
 };
 
@@ -163,9 +167,6 @@ initialCards.forEach((initialCardsInfo) => {
 // Функции открытия и закрытия попапов
 const popupOpen = (popup) => {
   popup.classList.add('popup_opened');
-  // popup.addEventListener('keydown', (evt) => {
-  //   console.log(evt);
-  // });
 };
 
 const popupProfileOpen = () => {
@@ -180,43 +181,60 @@ const popupAddPhotoOpen = () => {
 
 const popupClose = (popup) => {
   popup.classList.remove('popup_opened');
-  // popup.removeEventListener('keydown', () => {});
+  // popup.removeEventListener('keydown', (event) => {
+  // const key = event.key;
+  // if (key === 'Escape') {
+  //     popup.classList.remove('popup_opened');
+  //   }
+  // });
 };
 
-const popupProfileClose = () => {
-  popupClose(popupProfile);
-};
+// const popupProfileClose = () => {
+//   popupClose(popupProfile);
+// };
 
 const popupAddPhotoClose = () => {
   popupClose(popupAddPhoto);
 };
 
-const closeViewingCard = () => {
-  popupClose(popupViewCard);
-};
+// const closeViewingCard = () => {
+//   popupClose(popupViewCard);
+// };
 
 //Слушатель для всех крестиков закрытия
 popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup__close')) {
+  popup.addEventListener('click', (event) => {
+    if (event.target.classList.contains('popup__close')) {
+      popupClose(popup);
+    }
+    if (event.target === event.currentTarget) {
       popupClose(popup);
     }
   });
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    if (openedPopup) {
+      popupClose(openedPopup);
+    }
+  }
 });
 
 openPopupButton.addEventListener('click', popupProfileOpen);
 
 openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
 
-popupProfile.addEventListener('click', handlePopupProfileOverlayClick);
+// popupProfile.addEventListener('click', handlePopupProfileOverlayClick);
 
-popupAddPhoto.addEventListener('click', handlePopupAddPhotoOverlayClick);
+// popupAddPhoto.addEventListener('click', handlePopupAddPhotoOverlayClick);
 
-popupViewCard.addEventListener('click', handlePopupViewCardOverlayClick);
+// popupViewCard.addEventListener('click', handlePopupViewCardOverlayClick);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', handleProfileFormSubmit);
+formProfile.addEventListener('submit', handleProfileFormSubmit);
 
 //Прикрепляем обработчик к форме добавления фото:
 
