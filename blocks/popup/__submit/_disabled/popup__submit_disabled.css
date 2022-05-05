@@ -1,3 +1,6 @@
-.popup__submit_daisabled {
+.popup__submit_disabled {
     background: #E5E5E5;
+    color: rgb(184, 184, 184);
+    pointer-events: none;
+    user-select: none;
 }
