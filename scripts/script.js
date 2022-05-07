@@ -67,6 +67,8 @@ const popupViewCard = document.querySelector('.popup_image');
 //Переменная для поиска всех крестиков закрытия
 const popups = document.querySelectorAll('.popup');
 
+const ESCAPE = 'Escape';
+
 // Находим форму редактирования профиля в DOM
 const formProfile = document.querySelector('.popup__form_type_profile');
 
@@ -116,24 +118,16 @@ const handleProfileFormSubmit = (event) => {
   jobText.textContent = jobInput.value;
   popupClose(popupProfile);
 };
+// Обработчик события keydown
 
-// function handlePopupProfileOverlayClick(event) {
-//   if (event.target === event.currentTarget) {
-//     popupProfileClose();
-//   }
-// }
-
-// function handlePopupAddPhotoOverlayClick(event) {
-//   if (event.target === event.currentTarget) {
-//     popupAddPhotoClose();
-//   }
-// }
-
-// function handlePopupViewCardOverlayClick(event) {
-//   if (event.target === event.currentTarget) {
-//     closeViewingCard();
-//   }
-// }
+const handleEsc = (event) => {
+  if (event.key === ESCAPE) {
+    const openedPopup = document.querySelector('.popup_opened');
+    if (openedPopup) {
+      popupClose(openedPopup);
+    }
+  }
+};
 
 //Генерация карточки
 const generateCard = (imageData) => {
@@ -167,6 +161,7 @@ initialCards.forEach((initialCardsInfo) => {
 // Функции открытия и закрытия попапов
 const popupOpen = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleEsc);
 };
 
 const popupProfileOpen = () => {
@@ -181,25 +176,12 @@ const popupAddPhotoOpen = () => {
 
 const popupClose = (popup) => {
   popup.classList.remove('popup_opened');
-  // popup.removeEventListener('keydown', (event) => {
-  // const key = event.key;
-  // if (key === 'Escape') {
-  //     popup.classList.remove('popup_opened');
-  //   }
-  // });
+  document.removeEventListener('keydown', handleEsc);
 };
-
-// const popupProfileClose = () => {
-//   popupClose(popupProfile);
-// };
 
 const popupAddPhotoClose = () => {
   popupClose(popupAddPhoto);
 };
-
-// const closeViewingCard = () => {
-//   popupClose(popupViewCard);
-// };
 
 //Слушатель для всех крестиков закрытия
 popups.forEach((popup) => {
@@ -213,24 +195,9 @@ popups.forEach((popup) => {
   });
 });
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    if (openedPopup) {
-      popupClose(openedPopup);
-    }
-  }
-});
-
 openPopupButton.addEventListener('click', popupProfileOpen);
 
 openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
-
-// popupProfile.addEventListener('click', handlePopupProfileOverlayClick);
-
-// popupAddPhoto.addEventListener('click', handlePopupAddPhotoOverlayClick);
-
-// popupViewCard.addEventListener('click', handlePopupViewCardOverlayClick);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
