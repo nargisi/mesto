@@ -35,9 +35,9 @@ const elementsList = document.querySelector('.elements');
 const elementsTemplate = document.querySelector('#cards-template').content;
 
 // Переменные для редактирования профиля
-const openPopupButton = document.querySelector('.profile__info-button');
+const popupProfileOpenButton = document.querySelector('.profile__info-button');
 const popupProfile = document.querySelector('.popup_profile');
-const closePopupButton = popupProfile.querySelector('.popup__close');
+const popupProfileCloseButton = popupProfile.querySelector('.popup__close');
 
 const nameInput = popupProfile.querySelector('.popup__input_type_name');
 const jobInput = popupProfile.querySelector('.popup__input_type_job');
@@ -46,10 +46,13 @@ const nameText = document.querySelector('.profile__title');
 const jobText = document.querySelector('.profile__subtitle');
 
 // Переменные для добавления фото
-const openPopupAddPhotoButton = document.querySelector('.profile__button');
+const popupAddPhotoOpenButton = document.querySelector('.profile__button');
 const popupAddPhoto = document.querySelector('.popup_add');
-const closePopupAddPhotoButton = popupAddPhoto.querySelector(
+const popupAddPhotoCloseButton = popupAddPhoto.querySelector(
   '.popup__close_type_add'
+);
+const popupAddPhotoSubmit = popupAddPhoto.querySelector(
+  '.popup__submit_type_photo'
 );
 
 const placeText = document.querySelector('.popup__input_type_place');
@@ -92,7 +95,7 @@ const handleView = (event) => {
   viewCard.src = src;
   viewCardName.textContent = name;
   viewCard.alt = name;
-  popupOpen(popupViewCard);
+  openPopup(popupViewCard);
 };
 
 // Обработчик добавления фото
@@ -105,8 +108,10 @@ const handleSubmitNewCard = (event) => {
     link: hrefText.value,
   });
 
-  popupAddPhotoClose();
+  closePopupAddPhoto();
   formAdd.reset();
+  popupAddPhotoSubmit.classList.add('popup__submit_disabled');
+  popupAddPhotoSubmit.setAttribute('disabled', 'disabled');
   elementsList.prepend(newCard);
 };
 
@@ -116,7 +121,7 @@ const handleProfileFormSubmit = (event) => {
   event.preventDefault();
   nameText.textContent = nameInput.value;
   jobText.textContent = jobInput.value;
-  popupClose(popupProfile);
+  closePopup(popupProfile);
 };
 // Обработчик события keydown
 
@@ -124,7 +129,7 @@ const handleEsc = (event) => {
   if (event.key === ESCAPE) {
     const openedPopup = document.querySelector('.popup_opened');
     if (openedPopup) {
-      popupClose(openedPopup);
+      closePopup(openedPopup);
     }
   }
 };
@@ -159,45 +164,45 @@ initialCards.forEach((initialCardsInfo) => {
 });
 
 // Функции открытия и закрытия попапов
-const popupOpen = (popup) => {
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleEsc);
 };
 
-const popupProfileOpen = () => {
+const openPopupProfile = () => {
   nameInput.value = nameText.textContent;
   jobInput.value = jobText.textContent;
-  popupOpen(popupProfile);
+  openPopup(popupProfile);
 };
 
-const popupAddPhotoOpen = () => {
-  popupOpen(popupAddPhoto);
+const openPopupAddPhoto = () => {
+  openPopup(popupAddPhoto);
 };
 
-const popupClose = (popup) => {
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEsc);
 };
 
-const popupAddPhotoClose = () => {
-  popupClose(popupAddPhoto);
+const closePopupAddPhoto = () => {
+  closePopup(popupAddPhoto);
 };
 
 //Слушатель для всех крестиков закрытия
 popups.forEach((popup) => {
   popup.addEventListener('click', (event) => {
     if (event.target.classList.contains('popup__close')) {
-      popupClose(popup);
+      closePopup(popup);
     }
     if (event.target === event.currentTarget) {
-      popupClose(popup);
+      closePopup(popup);
     }
   });
 });
 
-openPopupButton.addEventListener('click', popupProfileOpen);
+popupProfileOpenButton.addEventListener('click', openPopupProfile);
 
-openPopupAddPhotoButton.addEventListener('click', popupAddPhotoOpen);
+popupAddPhotoOpenButton.addEventListener('click', openPopupAddPhoto);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
