@@ -1,3 +1,5 @@
+import Card from './Card.js';
+
 const initialCards = [
   {
     name: 'Цветы',
@@ -32,7 +34,7 @@ const initialCards = [
 ];
 
 const elementsList = document.querySelector('.elements');
-const elementsTemplate = document.querySelector('#cards-template').content;
+// const elementsTemplate = document.querySelector('#cards-template').content;
 
 // Переменные для редактирования профиля
 const popupProfileOpenButton = document.querySelector('.profile__info-button');
@@ -78,14 +80,14 @@ const formProfile = document.querySelector('.popup__form_type_profile');
 // Находим форму добавления фото в DOM
 const formAdd = document.querySelector('.popup__form_type_add');
 
-// Обработчики
-const handleRemove = (event) => {
-  event.target.closest('.element').remove();
-};
+// // Обработчики
+// const handleRemove = (event) => {
+//   event.target.closest('.element').remove();
+// };
 
-const handleClickLike = (event) => {
-  event.target.classList.toggle('element__group_active');
-};
+// const handleClickLike = (event) => {
+//   event.target.classList.toggle('element__group_active');
+// };
 
 const handleView = (event) => {
   const src = event.target.src;
@@ -102,17 +104,23 @@ const handleView = (event) => {
 const handleSubmitNewCard = (event) => {
   event.preventDefault();
 
-  const newCard = generateCard({
-    name: placeText.value,
-    description: placeText.value,
-    link: hrefText.value,
-  });
+  const newCard = new Card(
+    {
+      name: placeText.value,
+      description: placeText.value,
+      link: hrefText.value,
+    },
+    '#cards-template',
+    handleView
+  );
+  const cardItem = newCard.generate();
 
   closePopupAddPhoto();
   formAdd.reset();
   popupAddPhotoSubmit.classList.add('popup__submit_disabled');
   popupAddPhotoSubmit.setAttribute('disabled', 'disabled');
-  elementsList.prepend(newCard);
+
+  elementsList.prepend(cardItem);
 };
 
 // Обработчик «отправки» формы, хотя пока
@@ -135,32 +143,29 @@ const handleEsc = (event) => {
 };
 
 //Генерация карточки
-const generateCard = (imageData) => {
-  const cardElement = elementsTemplate.cloneNode(true);
-  const imageElement = cardElement.querySelector('.element__mask-group');
+// const generateCard = (imageData) => {
+//   const cardElement = elementsTemplate.cloneNode(true);
+//   const imageElement = cardElement.querySelector('.element__mask-group');
 
-  cardElement.querySelector('.element__text').textContent = imageData.name;
-  imageElement.src = imageData.link;
-  imageElement.alt = imageData.description;
+//   cardElement.querySelector('.element__text').textContent = imageData.name;
+//   imageElement.src = imageData.link;
+//   imageElement.alt = imageData.description;
 
-  const clickLikeButton = cardElement.querySelector('.element__group');
-  clickLikeButton.addEventListener('click', handleClickLike);
+//   const clickLikeButton = cardElement.querySelector('.element__group');
+//   clickLikeButton.addEventListener('click', handleClickLike);
 
-  const removeCardButton = cardElement.querySelector('.element__basket');
-  removeCardButton.addEventListener('click', handleRemove);
+//   const removeCardButton = cardElement.querySelector('.element__basket');
+//   removeCardButton.addEventListener('click', handleRemove);
 
-  imageElement.addEventListener('click', handleView);
+//   imageElement.addEventListener('click', handleView);
 
-  return cardElement;
-};
+//   return cardElement;
+// };
 
 initialCards.forEach((initialCardsInfo) => {
-  const newCard = generateCard({
-    name: initialCardsInfo.name,
-    description: initialCardsInfo.description,
-    link: initialCardsInfo.link,
-  });
-  elementsList.append(newCard);
+  const newCard = new Card(initialCardsInfo, '#cards-template', handleView);
+  const cardElement = newCard.generate();
+  elementsList.append(cardElement);
 });
 
 // Функции открытия и закрытия попапов
