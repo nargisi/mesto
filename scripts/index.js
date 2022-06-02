@@ -212,6 +212,8 @@ formProfile.addEventListener('submit', handleProfileFormSubmit);
 
 formAdd.addEventListener('submit', handleSubmitNewCard);
 
+//Настраиваем валидацию форм
+
 const profileValidator = new FormValidator(
   {
     inputSelector: '.popup__input',
