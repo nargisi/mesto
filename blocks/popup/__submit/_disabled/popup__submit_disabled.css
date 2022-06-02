@@ -1,5 +1,5 @@
 .popup__submit_disabled {
-    background: #E5E5E5;
+    background: #FFF;
     color: rgb(184, 184, 184);
     pointer-events: none;
     user-select: none;
