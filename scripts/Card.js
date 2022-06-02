@@ -1,10 +1,10 @@
 export default class Card {
-  constructor(data, selector, viewHandler) {
+  constructor(data, selector, handleView) {
     this._name = data.name;
     this._link = data.link;
     this._description = data.description;
     this._selector = selector;
-    this._viewHandler = viewHandler;
+    this._handleView = handleView;
   }
 
   _getTemplate() {
@@ -16,8 +16,9 @@ export default class Card {
   generate() {
     this._card = this._getTemplate();
     this._setEventListeners();
-    this._card.querySelector('.element__mask-group').src = this._link;
-    this._card.querySelector('.element__mask-group').alt = this._description;
+    const image = this._card.querySelector('.element__mask-group');
+    image.src = this._link;
+    image.alt = this._description;
     this._card.querySelector('.element__text').textContent = this._name;
 
     return this._card;
@@ -34,7 +35,9 @@ export default class Card {
 
     this._card
       .querySelector('.element__mask-group')
-      .addEventListener('click', this._viewHandler);
+      .addEventListener('click', () =>
+        this._handleView(this._name, this._link)
+      );
   }
 
   _handleClickLike = (event) => {
@@ -43,5 +46,6 @@ export default class Card {
 
   _handleRemove = (event) => {
     event.target.closest('.element').remove();
+    this._card = null;
   };
 }
