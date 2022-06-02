@@ -1,4 +1,5 @@
 import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 const initialCards = [
   {
@@ -80,14 +81,7 @@ const formProfile = document.querySelector('.popup__form_type_profile');
 // Находим форму добавления фото в DOM
 const formAdd = document.querySelector('.popup__form_type_add');
 
-// // Обработчики
-// const handleRemove = (event) => {
-//   event.target.closest('.element').remove();
-// };
-
-// const handleClickLike = (event) => {
-//   event.target.classList.toggle('element__group_active');
-// };
+// Обработчик просмотра фото
 
 const handleView = (event) => {
   const src = event.target.src;
@@ -131,6 +125,7 @@ const handleProfileFormSubmit = (event) => {
   jobText.textContent = jobInput.value;
   closePopup(popupProfile);
 };
+
 // Обработчик события keydown
 
 const handleEsc = (event) => {
@@ -216,3 +211,29 @@ formProfile.addEventListener('submit', handleProfileFormSubmit);
 //Прикрепляем обработчик к форме добавления фото:
 
 formAdd.addEventListener('submit', handleSubmitNewCard);
+
+const profileValidator = new FormValidator(
+  {
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error',
+  },
+  formProfile
+);
+
+profileValidator.enableValidation();
+
+const addValidator = new FormValidator(
+  {
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error',
+  },
+  formAdd
+);
+
+addValidator.enableValidation();
