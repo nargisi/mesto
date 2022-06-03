@@ -1,7 +1,8 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-import { initialCards } from './cards.js';
+import { initialCards } from './constants.js';
+import { dataValidator } from './constants.js';
 
 const elementsList = document.querySelector('.elements');
 
@@ -41,8 +42,8 @@ const formAdd = document.querySelector('.popup__form_type_add');
 
 const createCard = (initialCardsInfo, selector, handleView) => {
   const newCard = new Card(initialCardsInfo, selector, handleView);
-  const cardElement = newCard.generate();
-  return cardElement;
+
+  return newCard.generate();
 };
 
 // Обработчик просмотра фото
@@ -154,14 +155,6 @@ formProfile.addEventListener('submit', handleProfileFormSubmit);
 formAdd.addEventListener('submit', handleSubmitNewCard);
 
 //Настраиваем валидацию форм
-
-const dataValidator = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error',
-};
 
 const profileValidator = new FormValidator(dataValidator, formProfile);
 

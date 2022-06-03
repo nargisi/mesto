@@ -9,17 +9,16 @@ export default class Card {
 
   _getTemplate() {
     const template = document.querySelector(this._selector).content;
-    const cardElement = template.cloneNode(true);
-    return cardElement;
+    return template.cloneNode(true);
   }
 
   generate() {
     this._card = this._getTemplate();
-    this._setEventListeners();
-    const image = this._card.querySelector('.element__mask-group');
-    image.src = this._link;
-    image.alt = this._description;
+    this._image = this._card.querySelector('.element__mask-group');
+    this._image.src = this._link;
+    this._image.alt = this._description;
     this._card.querySelector('.element__text').textContent = this._name;
+    this._setEventListeners();
 
     return this._card;
   }
@@ -33,11 +32,9 @@ export default class Card {
       .querySelector('.element__basket')
       .addEventListener('click', this._handleRemove);
 
-    this._card
-      .querySelector('.element__mask-group')
-      .addEventListener('click', () =>
-        this._handleView(this._name, this._link)
-      );
+    this._image.addEventListener('click', () =>
+      this._handleView(this._name, this._link)
+    );
   }
 
   _handleClickLike = (event) => {
