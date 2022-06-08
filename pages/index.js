@@ -1,7 +1,7 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
+import Card from '../../scripts/Card.js';
+import FormValidator from '../../scripts/FormValidator.js';
 
-import { initialCards } from './cards.js';
+import { initialCards } from '../../scripts/cards.js';
 
 const elementsList = document.querySelector('.elements');
 
