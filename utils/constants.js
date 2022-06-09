@@ -38,3 +38,5 @@ export const dataValidator = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error',
 };
+
+export const elementsListSelector = '.elements';

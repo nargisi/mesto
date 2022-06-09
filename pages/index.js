@@ -1,9 +1,12 @@
-import Card from '../scripts/Card.js';
-import FormValidator from '../scripts/FormValidator.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 
-import { initialCards } from '../scripts/constants.js';
-
-const elementsList = document.querySelector('.elements');
+import {
+  initialCards,
+  elementsListSelector,
+  dataValidator,
+} from '../utils/constants.js';
 
 // Переменные для редактирования профиля
 const popupProfileOpenButton = document.querySelector('.profile__info-button');
@@ -95,14 +98,30 @@ const handleEsc = (event) => {
   }
 };
 
-initialCards.forEach((initialCardsInfo) => {
-  const cardElement = createCard(
-    initialCardsInfo,
-    '#cards-template',
-    handleView
-  );
-  elementsList.append(cardElement);
-});
+// initialCards.forEach((initialCardsInfo) => {
+//   const cardElement = createCard(
+//     initialCardsInfo,
+//     '#cards-template',
+//     handleView
+//   );
+//   elementsList.append(cardElement);
+// });
+
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (initialCardsInfo) => {
+      const cardElement = createCard(
+        initialCardsInfo,
+        '#cards-template',
+        handleView
+      );
+      cardList.addItem(cardElement);
+    },
+  },
+  elementsListSelector
+);
+cardList.renderItems();
 
 // Функции открытия и закрытия попапов
 const openPopup = (popup) => {
