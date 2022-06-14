@@ -40,3 +40,16 @@ export const dataValidator = {
 };
 
 export const elementsListSelector = '.elements';
+
+export const ESCAPE = 'Escape';
+
+export const popupProfileOpenButton = document.querySelector(
+  '.profile__info-button'
+);
+
+export const formProfile = document.querySelector('.popup__form_type_profile');
+
+export const formAdd = document.querySelector('.popup__form_type_add');
+
+export const popupAddPhotoOpenButton =
+  document.querySelector('.profile__button');

@@ -1,111 +1,52 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from '../components/UserInfo.js';
 
 import {
   initialCards,
   elementsListSelector,
   dataValidator,
+  popupProfileOpenButton,
+  popupAddPhotoOpenButton,
+  formProfile,
+  formAdd,
 } from '../utils/constants.js';
 
-// Переменные для редактирования профиля
-const popupProfileOpenButton = document.querySelector('.profile__info-button');
-const popupProfile = document.querySelector('.popup_profile');
+const popupAddPhoto = new PopupWithForm('.popup_add', ({ place, href }) => {
+  const card = createCard(
+    { name: place, link: href, description: place },
+    '#cards-template',
+    handleCardClick
+  );
+  cardList.addItem(card);
+});
 
-const nameInput = popupProfile.querySelector('.popup__input_type_name');
-const jobInput = popupProfile.querySelector('.popup__input_type_job');
-
-const nameText = document.querySelector('.profile__title');
-const jobText = document.querySelector('.profile__subtitle');
-
-// Переменные для добавления фото
-const popupAddPhotoOpenButton = document.querySelector('.profile__button');
-const popupAddPhoto = document.querySelector('.popup_add');
-
-const placeText = document.querySelector('.popup__input_type_place');
-const hrefText = document.querySelector('.popup__input_type_href');
-
-//Переменные для просмотра фото
-
-const viewCard = document.querySelector('.popup__image');
-const viewCardName = document.querySelector('.popup__fig');
-const popupViewCard = document.querySelector('.popup_image');
-
-//Переменная для поиска всех крестиков закрытия
-const popups = document.querySelectorAll('.popup');
-
-const ESCAPE = 'Escape';
-
-// Находим форму редактирования профиля в DOM
-const formProfile = document.querySelector('.popup__form_type_profile');
-
-// Находим форму добавления фото в DOM
-const formAdd = document.querySelector('.popup__form_type_add');
-
-const createCard = (initialCardsInfo, selector, handleView) => {
-  const newCard = new Card(initialCardsInfo, selector, handleView);
+const createCard = (initialCardsInfo, selector, handleCardClick) => {
+  const newCard = new Card(initialCardsInfo, selector, handleCardClick);
 
   return newCard.generate();
 };
 
+const userInfo = new UserInfo({
+  nameSelector: '.profile__title',
+  jobSelector: '.profile__subtitle',
+});
+
+const popupProfile = new PopupWithForm('.popup_profile', (formData) => {
+  userInfo.setUserInfo(formData);
+});
+const popupViewCard = new PopupWithImage('.popup_image');
+
+const popups = [popupAddPhoto, popupProfile, popupViewCard];
+
 // Обработчик просмотра фото
 
-const handleView = (name, src) => {
-  viewCard.src = src;
-  viewCardName.textContent = name;
-  viewCard.alt = name;
-  openPopup(popupViewCard);
+const handleCardClick = (name, src) => {
+  popupViewCard.open({ image: src, name });
 };
-
-// Обработчик добавления фото
-const handleSubmitNewCard = (event) => {
-  event.preventDefault();
-
-  const cardItem = createCard(
-    {
-      name: placeText.value,
-      description: placeText.value,
-      link: hrefText.value,
-    },
-    '#cards-template',
-    handleView
-  );
-
-  closePopupAddPhoto();
-  formAdd.reset();
-  addValidator.disableButton();
-
-  elementsList.prepend(cardItem);
-};
-
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-const handleProfileFormSubmit = (event) => {
-  event.preventDefault();
-  nameText.textContent = nameInput.value;
-  jobText.textContent = jobInput.value;
-  closePopup(popupProfile);
-};
-
-// Обработчик события keydown
-
-const handleEsc = (event) => {
-  if (event.key === ESCAPE) {
-    const openedPopup = document.querySelector('.popup_opened');
-    if (openedPopup) {
-      closePopup(openedPopup);
-    }
-  }
-};
-
-// initialCards.forEach((initialCardsInfo) => {
-//   const cardElement = createCard(
-//     initialCardsInfo,
-//     '#cards-template',
-//     handleView
-//   );
-//   elementsList.append(cardElement);
-// });
 
 const cardList = new Section(
   {
@@ -114,7 +55,7 @@ const cardList = new Section(
       const cardElement = createCard(
         initialCardsInfo,
         '#cards-template',
-        handleView
+        handleCardClick
       );
       cardList.addItem(cardElement);
     },
@@ -123,54 +64,30 @@ const cardList = new Section(
 );
 cardList.renderItems();
 
-// Функции открытия и закрытия попапов
-const openPopup = (popup) => {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', handleEsc);
-};
+//Функции открытия и закрытия попапов
 
 const openPopupProfile = () => {
-  nameInput.value = nameText.textContent;
-  jobInput.value = jobText.textContent;
-  openPopup(popupProfile);
+  popupProfile.open();
+  popupProfile.setInputValues(userInfo.getUserInfo());
 };
 
 const openPopupAddPhoto = () => {
-  openPopup(popupAddPhoto);
-};
-
-const closePopup = (popup) => {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleEsc);
+  popupAddPhoto.open();
 };
 
 const closePopupAddPhoto = () => {
-  closePopup(popupAddPhoto);
+  popupAddPhoto.close();
 };
 
 //Слушатель для всех крестиков закрытия
+
 popups.forEach((popup) => {
-  popup.addEventListener('click', (event) => {
-    if (
-      event.target.classList.contains('popup__close') ||
-      event.target === event.currentTarget
-    ) {
-      closePopup(popup);
-    }
-  });
+  popup.setEventListeners();
 });
 
 popupProfileOpenButton.addEventListener('click', openPopupProfile);
 
 popupAddPhotoOpenButton.addEventListener('click', openPopupAddPhoto);
-
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formProfile.addEventListener('submit', handleProfileFormSubmit);
-
-//Прикрепляем обработчик к форме добавления фото:
-
-formAdd.addEventListener('submit', handleSubmitNewCard);
 
 //Настраиваем валидацию форм
 
