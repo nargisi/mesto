@@ -15,7 +15,7 @@
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
     .elements {
     grid-template-columns: repeat(1, 1fr);
     gap: 20px;

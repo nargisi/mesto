@@ -1,5 +1,6 @@
 .popup__image {
     height: 100%;
+    max-width: 75vw;
     vertical-align: top;
     margin: 0;
     object-fit: cover;

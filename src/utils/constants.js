@@ -53,3 +53,5 @@ export const formAdd = document.querySelector('.popup__form_type_add');
 
 export const popupAddPhotoOpenButton =
   document.querySelector('.profile__button');
+
+export const popupAddPhotoSubmit = document.querySelector('.popup__submi');

@@ -14,6 +14,7 @@ import {
   popupAddPhotoOpenButton,
   formProfile,
   formAdd,
+  popupAddPhotoSubmit,
 } from '../utils/constants.js';
 
 const popupAddPhoto = new PopupWithForm('.popup_add', ({ place, href }) => {
@@ -22,6 +23,7 @@ const popupAddPhoto = new PopupWithForm('.popup_add', ({ place, href }) => {
     '#cards-template',
     handleCardClick
   );
+
   cardList.addItem(card);
 });
 
@@ -99,3 +101,7 @@ profileValidator.enableValidation();
 const addValidator = new FormValidator(dataValidator, formAdd);
 
 addValidator.enableValidation();
+
+// popupAddPhotoSubmit.classList.add('popup__submit_disabled');
+
+// popupAddPhotoSubmit.setAttribute('disabled', 'disabled');
