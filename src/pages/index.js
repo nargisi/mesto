@@ -14,7 +14,6 @@ import {
   popupAddPhotoOpenButton,
   formProfile,
   formAdd,
-  popupAddPhotoSubmit,
 } from '../utils/constants.js';
 
 const popupAddPhoto = new PopupWithForm('.popup_add', ({ place, href }) => {
@@ -24,7 +23,7 @@ const popupAddPhoto = new PopupWithForm('.popup_add', ({ place, href }) => {
     handleCardClick
   );
 
-  cardList.addItem(card);
+  cardList.addItem(card, false);
 });
 
 const createCard = (initialCardsInfo, selector, handleCardClick) => {
@@ -76,10 +75,7 @@ const openPopupProfile = () => {
 
 const openPopupAddPhoto = () => {
   popupAddPhoto.open();
-};
-
-const closePopupAddPhoto = () => {
-  popupAddPhoto.close();
+  addValidator.disableButton();
 };
 
 //Слушатель для всех крестиков закрытия
@@ -101,7 +97,3 @@ profileValidator.enableValidation();
 const addValidator = new FormValidator(dataValidator, formAdd);
 
 addValidator.enableValidation();
-
-// popupAddPhotoSubmit.classList.add('popup__submit_disabled');
-
-// popupAddPhotoSubmit.setAttribute('disabled', 'disabled');

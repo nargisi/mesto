@@ -1,13 +1,13 @@
 export const initialCards = [
   {
-    name: 'Цветы',
-    link: 'https://images.unsplash.com/photo-1650490558436-b7d0c79b5baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
-    description: 'Цветы',
+    name: 'Пчела',
+    link: 'https://cdn.pixabay.com/photo/2022/06/12/16/43/insect-7258412_960_720.jpg',
+    description: 'Пчела',
   },
   {
-    name: 'Море',
-    link: 'https://images.unsplash.com/photo-1650421495518-909969ad51d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMTB8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    description: 'Море',
+    name: 'Природа',
+    link: 'https://cdn.pixabay.com/photo/2022/05/23/13/09/grass-7216163_960_720.jpg',
+    description: 'Природа',
   },
   {
     name: 'Тюльпаны',
@@ -53,5 +53,3 @@ export const formAdd = document.querySelector('.popup__form_type_add');
 
 export const popupAddPhotoOpenButton =
   document.querySelector('.profile__button');
-
-export const popupAddPhotoSubmit = document.querySelector('.popup__submi');
