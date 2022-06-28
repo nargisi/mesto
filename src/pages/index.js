@@ -4,26 +4,66 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import './index.css';
 
 import {
-  initialCards,
   elementsListSelector,
   dataValidator,
   popupProfileOpenButton,
   popupAddPhotoOpenButton,
   formProfile,
   formAdd,
+  title,
+  subtitle,
+  avatar,
 } from '../utils/constants.js';
 
-const popupAddPhoto = new PopupWithForm('.popup_add', ({ place, href }) => {
-  const card = createCard(
-    { name: place, link: href, description: place },
-    '#cards-template',
-    handleCardClick
-  );
+let cardList;
 
-  cardList.addItem(card, false);
+const API_Config = {
+  baseURL: 'https://mesto.nomoreparties.co/v1/cohort-44',
+  headers: {
+    authorization: '413ddd3a-fff9-444b-99b1-64e1cf71ff3f',
+    'Content-Type': 'application/json',
+  },
+};
+const api = new Api(API_Config);
+
+api.getUserInfo().then((data) => {
+  title.textContent = data.name;
+  subtitle.textContent = data.about;
+  avatar.src = data.avatar;
+});
+
+api.getInitialCards().then((data) => {
+  cardList = new Section(
+    {
+      items: data,
+      renderer: (initialCardsInfo) => {
+        const cardElement = createCard(
+          initialCardsInfo,
+          '#cards-template',
+          handleCardClick
+        );
+        cardList.addItem(cardElement);
+      },
+    },
+    elementsListSelector
+  );
+  cardList.renderItems();
+});
+
+const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
+  api.addNewCard(data).then(({ name, link }) => {
+    const card = createCard(
+      { name, link, description: name },
+      '#cards-template',
+      handleCardClick
+    );
+
+    cardList.addItem(card, false);
+  });
 });
 
 const createCard = (initialCardsInfo, selector, handleCardClick) => {
@@ -38,7 +78,9 @@ const userInfo = new UserInfo({
 });
 
 const popupProfile = new PopupWithForm('.popup_profile', (formData) => {
-  userInfo.setUserInfo(formData);
+  api.updateProfile(formData).then(({ name, about }) => {
+    userInfo.setUserInfo({ name, job: about });
+  });
 });
 const popupViewCard = new PopupWithImage('.popup_image');
 
@@ -49,22 +91,6 @@ const popups = [popupAddPhoto, popupProfile, popupViewCard];
 const handleCardClick = (name, src) => {
   popupViewCard.open({ image: src, name });
 };
-
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (initialCardsInfo) => {
-      const cardElement = createCard(
-        initialCardsInfo,
-        '#cards-template',
-        handleCardClick
-      );
-      cardList.addItem(cardElement);
-    },
-  },
-  elementsListSelector
-);
-cardList.renderItems();
 
 //Функции открытия и закрытия попапов
 

@@ -16,15 +16,18 @@
 
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('./images/Kusto.jpg')%>" alt="Фото Жак-Ив Кусто" />
+                <div class="profile__edit">
+                    <img class="profile__avatar" src="" alt="Фото Жак-Ив Кусто" />
+                    <div class="profile__button-edit"></div>
+                </div>
                 <div class="profile__block">
                     <div class="profile__info">
                         <div class="profile__content">
-                            <h1 class="profile__title">Жак-Ив Кусто</h1>
+                            <h1 class="profile__title"></h1>
                             <button class="profile__info-button" type="button"
                                 aria-label="Редактировать профиль"></button>
                         </div>
-                        <p class="profile__subtitle">Исследователь океана</p>
+                        <p class="profile__subtitle"></p>
                     </div>
                     <button class="profile__button" type="button" aria-label="Добавить фото"></button>
                 </div>
@@ -49,7 +52,10 @@
             </div>
             <div class="element__sign">
                 <h2 class="element__text">Кот</h2>
-                <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                <div class="element__square">
+                    <button class="element__group" type="button" aria-label="Поставить лайк"></button>
+                    <div class="element__counter">0</div>
+                </div>
             </div>
         </li>
     </template>
@@ -91,6 +97,29 @@
             <button class="popup__close popup__close_type_image" type="button"></button>
             <img class="popup__image" src="#">
             <p class="popup__fig"></p>
+        </div>
+    </div>
+
+    <div class="popup popup_ask">
+        <div class="popup__container popup__container_type_ask">
+            <button class="popup__close popup__close_type_ask" type="button"></button>
+            <form class="popup__form popup__form_type_ask" name="form" novalidate>
+                <h3 class="popup__title">Вы уверены?</h3>
+                <button disabled class="popup__submit popup__submit_type_ask" type="submit">Да</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_update">
+        <div class="popup__container popup__container_type_update">
+            <button class="popup__close popup__close_type_update" type="button"></button>
+            <form class="popup__form popup__form_type_update" name="form" novalidate>
+                <h3 class="popup__title">Обновить аватар</h3>
+                <input id="href-input" class="popup__input popup__input_type_update" type="url" value="" name="href"
+                    placeholder='Ссылка на картинку' required />
+                <span class="href-input-error popup__input-error"></span>
+                <button disabled class="popup__submit popup__submit_type_update" type="submit">Сохранить</button>
+            </form>
         </div>
     </div>
 
