@@ -1,10 +1,14 @@
+const ownerId = 'b8fd61bcae720e79e3bcc110';
 export default class Card {
-  constructor(data, selector, handleCardClick) {
+  constructor(data, selector, handleCardClick, handleCardRemove) {
     this._name = data.name;
+    this._id = data._id;
+    this._ownerId = data.owner._id;
     this._link = data.link;
     this._description = data.description;
     this._selector = selector;
     this._handleCardClick = handleCardClick;
+    this._handleCardRemove = handleCardRemove;
   }
 
   _getTemplate() {
@@ -18,6 +22,11 @@ export default class Card {
     this._image.alt = this._description;
     this._card.querySelector('.element__text').textContent = this._name;
     this._setEventListeners();
+    if (this._ownerId === ownerId) {
+      this._card
+        .querySelector('.element__basket')
+        .classList.remove('element__basket_unvisible');
+    }
 
     return this._card;
   }
@@ -41,7 +50,9 @@ export default class Card {
   };
 
   _handleRemove = () => {
-    this._card.remove();
-    this._card = null;
+    this._handleCardRemove(this._id).then(() => {
+      this._card.remove();
+      this._card = null;
+    });
   };
 }

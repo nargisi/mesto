@@ -19,6 +19,7 @@
 @import url(../blocks/profile/__button-edit/profile__button-edit.css);
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/element/__basket/element__basket.css);
+@import url(../blocks/element/__basket/_unvisible/element__basket_unvisible.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__mask-group/element__mask-group.css);

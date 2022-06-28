@@ -44,7 +44,8 @@ api.getInitialCards().then((data) => {
         const cardElement = createCard(
           initialCardsInfo,
           '#cards-template',
-          handleCardClick
+          handleCardClick,
+          handleCardRemove
         );
         cardList.addItem(cardElement);
       },
@@ -59,15 +60,25 @@ const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
     const card = createCard(
       { name, link, description: name },
       '#cards-template',
-      handleCardClick
+      handleCardClick,
+      handleCardRemove
     );
-
     cardList.addItem(card, false);
   });
 });
 
-const createCard = (initialCardsInfo, selector, handleCardClick) => {
-  const newCard = new Card(initialCardsInfo, selector, handleCardClick);
+const createCard = (
+  initialCardsInfo,
+  selector,
+  handleCardClick,
+  handleCardRemove
+) => {
+  const newCard = new Card(
+    initialCardsInfo,
+    selector,
+    handleCardClick,
+    handleCardRemove
+  );
 
   return newCard.generate();
 };
@@ -91,6 +102,8 @@ const popups = [popupAddPhoto, popupProfile, popupViewCard];
 const handleCardClick = (name, src) => {
   popupViewCard.open({ image: src, name });
 };
+
+const handleCardRemove = (id) => api.deleteOwnCard(id);
 
 //Функции открытия и закрытия попапов
 
