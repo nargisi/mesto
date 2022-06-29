@@ -1,3 +1,4 @@
+import renderLoading from '../utils/constants.js';
 export default class Api {
   constructor(options) {
     this._baseURL = options.baseURL;
@@ -72,6 +73,23 @@ export default class Api {
     return fetch(`${this._baseURL}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  editUserAvatar(avatar) {
+    return fetch(`${this._baseURL}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({ avatar }),
     })
       .then((res) => {
         if (res.ok) {

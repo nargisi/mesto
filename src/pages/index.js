@@ -18,6 +18,7 @@ import {
   title,
   subtitle,
   avatar,
+  editAvatar,
 } from '../utils/constants.js';
 
 let cardList;
@@ -57,7 +58,7 @@ api.getInitialCards().then((data) => {
 });
 
 const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
-  api.addNewCard(data).then(({ name, link, owner, _id }) => {
+  return api.addNewCard(data).then(({ name, link, owner, _id }) => {
     const card = createCard(
       { name, link, description: name, owner, _id },
       '#cards-template',
@@ -87,10 +88,11 @@ const createCard = (
 const userInfo = new UserInfo({
   nameSelector: '.profile__title',
   jobSelector: '.profile__subtitle',
+  avatarSelector: '.profile__avatar',
 });
 
 const popupProfile = new PopupWithForm('.popup_profile', (formData) => {
-  api.updateProfile(formData).then(({ name, about }) => {
+  return api.updateProfile(formData).then(({ name, about }) => {
     userInfo.setUserInfo({ name, job: about });
   });
 });
@@ -98,11 +100,18 @@ const popupViewCard = new PopupWithImage('.popup_image');
 
 const popupDeleteCardImage = new PopupDeleteCard('.popup_ask');
 
+const popupEditUserAvatar = new PopupWithForm('.popup_update', ({ href }) => {
+  return api.editUserAvatar(href).then(() => {
+    userInfo.setUserAvatar(href);
+  });
+});
+
 const popups = [
   popupAddPhoto,
   popupProfile,
   popupViewCard,
   popupDeleteCardImage,
+  popupEditUserAvatar,
 ];
 
 // Обработчик просмотра фото
@@ -111,6 +120,7 @@ const handleCardClick = (name, src) => {
   popupViewCard.open({ image: src, name });
 };
 
+// Обработчик удаления карточки
 const handleCardRemove = (id, callback) => {
   popupDeleteCardImage.open();
   popupDeleteCardImage.setSubmitHandler(() => {
@@ -120,7 +130,7 @@ const handleCardRemove = (id, callback) => {
   });
 };
 
-//Функции открытия и закрытия попапов
+// Функции открытия и закрытия попапов
 
 const openPopupProfile = () => {
   popupProfile.open();
@@ -132,9 +142,9 @@ const openPopupAddPhoto = () => {
   addValidator.disableButton();
 };
 
-// const openPopupDeleteCard = () => {
-//   popupDeleteCardImage.open();
-// };
+const openPopupEditUserAvatar = () => {
+  popupEditUserAvatar.open();
+};
 
 //Слушатель для всех крестиков закрытия
 
@@ -145,6 +155,8 @@ popups.forEach((popup) => {
 popupProfileOpenButton.addEventListener('click', openPopupProfile);
 
 popupAddPhotoOpenButton.addEventListener('click', openPopupAddPhoto);
+
+editAvatar.addEventListener('click', openPopupEditUserAvatar);
 
 //Настраиваем валидацию форм
 
