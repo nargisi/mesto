@@ -4,6 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
+import PopupDeleteCard from '../components/PopupDeleteCard.js';
 import Api from '../components/Api.js';
 import './index.css';
 
@@ -56,9 +57,9 @@ api.getInitialCards().then((data) => {
 });
 
 const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
-  api.addNewCard(data).then(({ name, link }) => {
+  api.addNewCard(data).then(({ name, link, owner, _id }) => {
     const card = createCard(
-      { name, link, description: name },
+      { name, link, description: name, owner, _id },
       '#cards-template',
       handleCardClick,
       handleCardRemove
@@ -95,7 +96,14 @@ const popupProfile = new PopupWithForm('.popup_profile', (formData) => {
 });
 const popupViewCard = new PopupWithImage('.popup_image');
 
-const popups = [popupAddPhoto, popupProfile, popupViewCard];
+const popupDeleteCardImage = new PopupDeleteCard('.popup_ask');
+
+const popups = [
+  popupAddPhoto,
+  popupProfile,
+  popupViewCard,
+  popupDeleteCardImage,
+];
 
 // Обработчик просмотра фото
 
@@ -103,7 +111,14 @@ const handleCardClick = (name, src) => {
   popupViewCard.open({ image: src, name });
 };
 
-const handleCardRemove = (id) => api.deleteOwnCard(id);
+const handleCardRemove = (id, callback) => {
+  popupDeleteCardImage.open();
+  popupDeleteCardImage.setSubmitHandler(() => {
+    api.deleteOwnCard(id).then(() => {
+      callback();
+    });
+  });
+};
 
 //Функции открытия и закрытия попапов
 
@@ -116,6 +131,10 @@ const openPopupAddPhoto = () => {
   popupAddPhoto.open();
   addValidator.disableButton();
 };
+
+// const openPopupDeleteCard = () => {
+//   popupDeleteCardImage.open();
+// };
 
 //Слушатель для всех крестиков закрытия
 

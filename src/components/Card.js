@@ -50,7 +50,7 @@ export default class Card {
   };
 
   _handleRemove = () => {
-    this._handleCardRemove(this._id).then(() => {
+    this._handleCardRemove(this._id, () => {
       this._card.remove();
       this._card = null;
     });
