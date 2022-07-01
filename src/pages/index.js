@@ -19,17 +19,11 @@ import {
   subtitle,
   avatar,
   editAvatar,
+  API_Config,
 } from '../utils/constants.js';
 
 let cardList;
 
-const API_Config = {
-  baseURL: 'https://mesto.nomoreparties.co/v1/cohort-44',
-  headers: {
-    authorization: '413ddd3a-fff9-444b-99b1-64e1cf71ff3f',
-    'Content-Type': 'application/json',
-  },
-};
 const api = new Api(API_Config);
 
 api.getUserInfo().then((data) => {
@@ -47,7 +41,8 @@ api.getInitialCards().then((data) => {
           initialCardsInfo,
           '#cards-template',
           handleCardClick,
-          handleCardRemove
+          handleCardRemove,
+          handleCardLike
         );
         cardList.addItem(cardElement);
       },
@@ -58,12 +53,13 @@ api.getInitialCards().then((data) => {
 });
 
 const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
-  return api.addNewCard(data).then(({ name, link, owner, _id }) => {
+  return api.addNewCard(data).then(({ name, link, owner, _id, likes }) => {
     const card = createCard(
-      { name, link, description: name, owner, _id },
+      { name, link, description: name, owner, _id, likes },
       '#cards-template',
       handleCardClick,
-      handleCardRemove
+      handleCardRemove,
+      handleCardLike
     );
     cardList.addItem(card, false);
   });
@@ -73,13 +69,15 @@ const createCard = (
   initialCardsInfo,
   selector,
   handleCardClick,
-  handleCardRemove
+  handleCardRemove,
+  handleCardLike
 ) => {
   const newCard = new Card(
     initialCardsInfo,
     selector,
     handleCardClick,
-    handleCardRemove
+    handleCardRemove,
+    handleCardLike
   );
 
   return newCard.generate();
@@ -127,6 +125,13 @@ const handleCardRemove = (id, callback) => {
     api.deleteOwnCard(id).then(() => {
       callback();
     });
+  });
+};
+
+// Обработчик лайка карточки
+const handleCardLike = (id, isLike, callback) => {
+  api.changeCardLike(id, isLike).then(({ likes }) => {
+    callback(likes);
   });
 };
 

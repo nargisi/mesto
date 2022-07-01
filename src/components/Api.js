@@ -1,4 +1,3 @@
-import renderLoading from '../utils/constants.js';
 export default class Api {
   constructor(options) {
     this._baseURL = options.baseURL;
@@ -101,4 +100,36 @@ export default class Api {
         console.log(err);
       });
   }
+
+  changeCardLike(id, isLike) {
+    return fetch(`${this._baseURL}/cards/likes/${id}`, {
+      method: isLike ? 'PUT' : 'DELETE',
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // deleteCardLike() {
+  //   return fetch(`${this._baseURL}/cards/likes/${id}`, {
+  //     method: 'DELETE',
+  //     headers: this._headers,
+  //   })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         return res.json();
+  //       }
+  //       return Promise.reject(`Ошибка: ${res.status}`);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 }
