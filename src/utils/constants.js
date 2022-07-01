@@ -18,6 +18,10 @@ export const formProfile = document.querySelector('.popup__form_type_profile');
 
 export const formAdd = document.querySelector('.popup__form_type_add');
 
+export const formChangeProfile = document.querySelector(
+  '.popup__form_type_update'
+);
+
 export const popupAddPhotoOpenButton =
   document.querySelector('.profile__button');
 

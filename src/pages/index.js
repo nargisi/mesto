@@ -20,6 +20,7 @@ import {
   avatar,
   editAvatar,
   API_Config,
+  formChangeProfile,
 } from '../utils/constants.js';
 
 let cardList;
@@ -172,3 +173,10 @@ profileValidator.enableValidation();
 const addValidator = new FormValidator(dataValidator, formAdd);
 
 addValidator.enableValidation();
+
+const changeProfileValidator = new FormValidator(
+  dataValidator,
+  formChangeProfile
+);
+
+changeProfileValidator.enableValidation();
