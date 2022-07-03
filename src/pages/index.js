@@ -27,23 +27,14 @@ let cardList;
 
 const api = new Api(API_Config);
 
-api
-  .getUserInfo()
-  .then((data) => {
-    title.textContent = data.name;
-    subtitle.textContent = data.about;
-    avatar.src = data.avatar;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-api
-  .getInitialCards()
-  .then((data) => {
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cardsData]) => {
+    title.textContent = userData.name;
+    subtitle.textContent = userData.about;
+    avatar.src = userData.avatar;
     cardList = new Section(
       {
-        items: data,
+        items: cardsData,
         renderer: (initialCardsInfo) => {
           const cardElement = createCard(
             initialCardsInfo,
@@ -62,6 +53,42 @@ api
   .catch((err) => {
     console.log(err);
   });
+
+// api
+//   .getUserInfo()
+//   .then((data) => {
+//     title.textContent = data.name;
+//     subtitle.textContent = data.about;
+//     avatar.src = data.avatar;
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+// api
+//   .getInitialCards()
+//   .then((data) => {
+//     cardList = new Section(
+//       {
+//         items: data,
+//         renderer: (initialCardsInfo) => {
+//           const cardElement = createCard(
+//             initialCardsInfo,
+//             '#cards-template',
+//             handleCardClick,
+//             handleCardRemove,
+//             handleCardLike
+//           );
+//           cardList.addItem(cardElement);
+//         },
+//       },
+//       elementsListSelector
+//     );
+//     cardList.renderItems();
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
   return api
@@ -125,7 +152,7 @@ const popupEditUserAvatar = new PopupWithForm('.popup_update', ({ href }) => {
   return api
     .editUserAvatar(href)
     .then(() => {
-      userInfo.setUserAvatar(href);
+      userInfo.setUserInfo({ avatar: href });
       popupEditUserAvatar.close();
     })
     .catch((err) => {
