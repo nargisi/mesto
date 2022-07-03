@@ -14,11 +14,11 @@ export default class PopupDeleteCard extends Popup {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit();
-      this.close();
+      // this.close();
     });
   }
 
-  close() {
-    super.close();
-  }
+  // close() {
+  //   super.close();
+  // }
 }

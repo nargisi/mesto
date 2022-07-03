@@ -27,43 +27,59 @@ let cardList;
 
 const api = new Api(API_Config);
 
-api.getUserInfo().then((data) => {
-  title.textContent = data.name;
-  subtitle.textContent = data.about;
-  avatar.src = data.avatar;
-});
+api
+  .getUserInfo()
+  .then((data) => {
+    title.textContent = data.name;
+    subtitle.textContent = data.about;
+    avatar.src = data.avatar;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-api.getInitialCards().then((data) => {
-  cardList = new Section(
-    {
-      items: data,
-      renderer: (initialCardsInfo) => {
-        const cardElement = createCard(
-          initialCardsInfo,
-          '#cards-template',
-          handleCardClick,
-          handleCardRemove,
-          handleCardLike
-        );
-        cardList.addItem(cardElement);
+api
+  .getInitialCards()
+  .then((data) => {
+    cardList = new Section(
+      {
+        items: data,
+        renderer: (initialCardsInfo) => {
+          const cardElement = createCard(
+            initialCardsInfo,
+            '#cards-template',
+            handleCardClick,
+            handleCardRemove,
+            handleCardLike
+          );
+          cardList.addItem(cardElement);
+        },
       },
-    },
-    elementsListSelector
-  );
-  cardList.renderItems();
-});
+      elementsListSelector
+    );
+    cardList.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
-  return api.addNewCard(data).then(({ name, link, owner, _id, likes }) => {
-    const card = createCard(
-      { name, link, description: name, owner, _id, likes },
-      '#cards-template',
-      handleCardClick,
-      handleCardRemove,
-      handleCardLike
-    );
-    cardList.addItem(card, false);
-  });
+  return api
+    .addNewCard(data)
+    .then(({ name, link, owner, _id, likes }) => {
+      const card = createCard(
+        { name, link, description: name, owner, _id, likes },
+        '#cards-template',
+        handleCardClick,
+        handleCardRemove,
+        handleCardLike
+      );
+      cardList.addItem(card, false);
+      popupAddPhoto.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 const createCard = (
@@ -91,18 +107,30 @@ const userInfo = new UserInfo({
 });
 
 const popupProfile = new PopupWithForm('.popup_profile', (formData) => {
-  return api.updateProfile(formData).then(({ name, about }) => {
-    userInfo.setUserInfo({ name, job: about });
-  });
+  return api
+    .updateProfile(formData)
+    .then(({ name, about }) => {
+      userInfo.setUserInfo({ name, job: about });
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 const popupViewCard = new PopupWithImage('.popup_image');
 
 const popupDeleteCardImage = new PopupDeleteCard('.popup_ask');
 
 const popupEditUserAvatar = new PopupWithForm('.popup_update', ({ href }) => {
-  return api.editUserAvatar(href).then(() => {
-    userInfo.setUserAvatar(href);
-  });
+  return api
+    .editUserAvatar(href)
+    .then(() => {
+      userInfo.setUserAvatar(href);
+      popupEditUserAvatar.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 const popups = [
@@ -123,17 +151,28 @@ const handleCardClick = (name, src) => {
 const handleCardRemove = (id, callback) => {
   popupDeleteCardImage.open();
   popupDeleteCardImage.setSubmitHandler(() => {
-    api.deleteOwnCard(id).then(() => {
-      callback();
-    });
+    api
+      .deleteOwnCard(id)
+      .then(() => {
+        callback();
+        popupDeleteCardImage.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 };
 
 // Обработчик лайка карточки
 const handleCardLike = (id, isLike, callback) => {
-  api.changeCardLike(id, isLike).then(({ likes }) => {
-    callback(likes);
-  });
+  api
+    .changeCardLike(id, isLike)
+    .then(({ likes }) => {
+      callback(likes);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 // Функции открытия и закрытия попапов
@@ -150,6 +189,7 @@ const openPopupAddPhoto = () => {
 
 const openPopupEditUserAvatar = () => {
   popupEditUserAvatar.open();
+  addValidator.disableButton();
 };
 
 //Слушатель для всех крестиков закрытия
