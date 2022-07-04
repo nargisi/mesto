@@ -36,4 +36,3 @@ export const API_Config = {
     'Content-Type': 'application/json',
   },
 };
-export const ownerId = 'b8fd61bcae720e79e3bcc110';

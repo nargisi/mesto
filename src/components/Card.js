@@ -1,11 +1,11 @@
-import { ownerId } from '../utils/constants.js';
 export default class Card {
   constructor(
     data,
     selector,
     handleCardClick,
     handleCardRemove,
-    handleCardLike
+    handleCardLike,
+    myId
   ) {
     this._name = data.name;
     this._id = data._id;
@@ -17,7 +17,8 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleCardRemove = handleCardRemove;
     this._handleCardLike = handleCardLike;
-    this._isLiked = Boolean(this._likes.find((like) => like._id === ownerId));
+    this._myId = myId;
+    this._isLiked = Boolean(this._likes.find((like) => like._id === myId));
   }
 
   _getTemplate() {
@@ -33,7 +34,7 @@ export default class Card {
     this._card.querySelector('.element__counter').textContent =
       this._likes.length;
     this._setEventListeners();
-    if (this._ownerId === ownerId) {
+    if (this._ownerId === this._myId) {
       this._card
         .querySelector('.element__basket')
         .classList.remove('element__basket_unvisible');

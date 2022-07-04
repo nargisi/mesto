@@ -25,6 +25,12 @@ import {
 
 let cardList;
 
+const userInfo = new UserInfo({
+  nameSelector: '.profile__title',
+  jobSelector: '.profile__subtitle',
+  avatarSelector: '.profile__avatar',
+});
+
 const api = new Api(API_Config);
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -32,6 +38,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     title.textContent = userData.name;
     subtitle.textContent = userData.about;
     avatar.src = userData.avatar;
+
+    userInfo.setUserInfo({ _id: userData._id });
     cardList = new Section(
       {
         items: cardsData,
@@ -41,7 +49,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
             '#cards-template',
             handleCardClick,
             handleCardRemove,
-            handleCardLike
+            handleCardLike,
+            userData._id
           );
           cardList.addItem(cardElement);
         },
@@ -54,42 +63,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err);
   });
 
-// api
-//   .getUserInfo()
-//   .then((data) => {
-//     title.textContent = data.name;
-//     subtitle.textContent = data.about;
-//     avatar.src = data.avatar;
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
-// api
-//   .getInitialCards()
-//   .then((data) => {
-//     cardList = new Section(
-//       {
-//         items: data,
-//         renderer: (initialCardsInfo) => {
-//           const cardElement = createCard(
-//             initialCardsInfo,
-//             '#cards-template',
-//             handleCardClick,
-//             handleCardRemove,
-//             handleCardLike
-//           );
-//           cardList.addItem(cardElement);
-//         },
-//       },
-//       elementsListSelector
-//     );
-//     cardList.renderItems();
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
 const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
   return api
     .addNewCard(data)
@@ -99,7 +72,8 @@ const popupAddPhoto = new PopupWithForm('.popup_add', (data) => {
         '#cards-template',
         handleCardClick,
         handleCardRemove,
-        handleCardLike
+        handleCardLike,
+        userInfo.getUserInfo().id
       );
       cardList.addItem(card, false);
       popupAddPhoto.close();
@@ -114,24 +88,20 @@ const createCard = (
   selector,
   handleCardClick,
   handleCardRemove,
-  handleCardLike
+  handleCardLike,
+  myId
 ) => {
   const newCard = new Card(
     initialCardsInfo,
     selector,
     handleCardClick,
     handleCardRemove,
-    handleCardLike
+    handleCardLike,
+    myId
   );
 
   return newCard.generate();
 };
-
-const userInfo = new UserInfo({
-  nameSelector: '.profile__title',
-  jobSelector: '.profile__subtitle',
-  avatarSelector: '.profile__avatar',
-});
 
 const popupProfile = new PopupWithForm('.popup_profile', (formData) => {
   return api
