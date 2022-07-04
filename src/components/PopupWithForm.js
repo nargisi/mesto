@@ -22,7 +22,10 @@ export default class PopupWithForm extends Popup {
 
   setInputValues(data) {
     for (const key in data) {
-      this._form.elements[key].value = data[key];
+      const input = this._form.elements[key];
+      if (input) {
+        input.value = data[key];
+      }
     }
   }
 
