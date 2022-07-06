@@ -35,11 +35,12 @@ const api = new Api(API_Config);
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cardsData]) => {
-    title.textContent = userData.name;
-    subtitle.textContent = userData.about;
-    avatar.src = userData.avatar;
-
-    userInfo.setUserInfo({ _id: userData._id });
+    userInfo.setUserInfo({
+      name: userData.name,
+      job: userData.about,
+      avatar: userData.avatar,
+      _id: userData._id,
+    });
     cardList = new Section(
       {
         items: cardsData,
